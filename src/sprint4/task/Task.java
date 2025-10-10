@@ -1,27 +1,25 @@
-package sprint4.Task;
+package sprint4.task;
 
 import java.util.Objects;
 
 public class Task {
-    private static int idCounter = 0;
-    private final String id;
+    private String id;
     private String name;
     private String description;
     private Status status;
 
-    public Task(String name, String description, Status aNew) {
-        this.id = generateId();
+    public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
-        this.status = Status.NEW;
-    }
-
-    private static String generateId() {
-        return "TASK-" + (++idCounter);
+        this.status = status;
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -45,16 +43,16 @@ public class Task {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Task task = (Task) obj;
-        return Objects.equals(id, task.id);
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

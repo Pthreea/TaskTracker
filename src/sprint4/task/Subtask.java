@@ -1,4 +1,4 @@
-package sprint4.Task;
+package sprint4.task;
 
 public class Subtask extends Task {
     private String epicId;

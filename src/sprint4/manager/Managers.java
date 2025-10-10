@@ -1,7 +1,6 @@
-package sprint4.Manager;
+package sprint4.manager;
 
 public class Managers {
-
     public static TaskManager getDefault() {
         return new InMemoryTaskManager();
     }

@@ -1,10 +1,10 @@
-package test.manager;
+package sprint4.test.manager;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint4.Manager.Managers;
-import sprint4.Manager.TaskManager;
-import sprint4.Manager.HistoryManager;
+import sprint4.manager.Managers;
+import sprint4.manager.TaskManager;
+import sprint4.manager.HistoryManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 

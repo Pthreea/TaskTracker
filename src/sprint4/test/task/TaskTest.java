@@ -1,9 +1,9 @@
-package test.task;
+package sprint4.test.task;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint4.Task.Task;
-import sprint4.Task.Status;
+import sprint4.task.Task;
+import sprint4.task.Status;
 
 import static org.junit.jupiter.api.Assertions.*;
 

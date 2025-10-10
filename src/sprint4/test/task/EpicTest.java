@@ -1,8 +1,8 @@
-package test.task;
+package sprint4.test.task;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint4.Task.Epic;
+import sprint4.task.Epic;
 
 import static org.junit.jupiter.api.Assertions.*;
 
