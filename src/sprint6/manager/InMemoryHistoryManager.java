@@ -1,6 +1,6 @@
-package sprint4.manager;
+package sprint6.manager;
 
-import sprint4.task.Task;
+import sprint6.task.Task;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {

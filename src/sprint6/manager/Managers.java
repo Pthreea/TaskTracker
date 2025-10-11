@@ -1,4 +1,4 @@
-package sprint4.manager;
+package sprint6.manager;
 
 public class Managers {
     public static TaskManager getDefault() {

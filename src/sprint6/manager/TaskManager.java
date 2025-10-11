@@ -1,8 +1,8 @@
-package sprint4.manager;
+package sprint6.manager;
 
-import sprint4.task.Task;
-import sprint4.task.Epic;
-import sprint4.task.Subtask;
+import sprint6.task.Task;
+import sprint6.task.Epic;
+import sprint6.task.Subtask;
 
 import java.util.List;
 

@@ -1,13 +1,13 @@
-package sprint4.test.manager;
+package sprint6.test.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sprint4.manager.TaskManager;
-import sprint4.manager.Managers;
-import sprint4.task.Task;
-import sprint4.task.Epic;
-import sprint4.task.Subtask;
-import sprint4.task.Status;
+import sprint6.manager.TaskManager;
+import sprint6.manager.Managers;
+import sprint6.task.Task;
+import sprint6.task.Epic;
+import sprint6.task.Subtask;
+import sprint6.task.Status;
 
 import static org.junit.jupiter.api.Assertions.*;
 

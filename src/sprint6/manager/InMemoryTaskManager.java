@@ -1,9 +1,9 @@
-package sprint4.manager;
+package sprint6.manager;
 
-import sprint4.task.Task;
-import sprint4.task.Epic;
-import sprint4.task.Subtask;
-import sprint4.task.Status;
+import sprint6.task.Task;
+import sprint6.task.Epic;
+import sprint6.task.Subtask;
+import sprint6.task.Status;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,8 +1,8 @@
-package sprint4.test.task;
+package sprint6.test.task;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint4.task.Subtask;
+import sprint6.task.Subtask;
 
 import static org.junit.jupiter.api.Assertions.*;
 
