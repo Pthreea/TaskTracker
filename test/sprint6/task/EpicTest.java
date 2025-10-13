@@ -1,4 +1,4 @@
-package sprint6.test.task;
+package sprint6.task;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

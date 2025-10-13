@@ -1,4 +1,4 @@
-package sprint6.test.manager;
+package sprint6.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
