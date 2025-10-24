@@ -1,5 +1,6 @@
 package sprint6.manager;
 
+import sprint6.exceptions.ManagerSaveException;
 import sprint6.task.Task;
 import sprint6.task.Epic;
 import sprint6.task.Subtask;
@@ -112,7 +113,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
             }
 
-            
+          
             String historyLine = reader.readLine();
             if (historyLine != null && !historyLine.isEmpty()) {
                 for (String id : historyLine.split(",")) {
@@ -122,6 +123,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                     if (task == null) {
                         task = manager.getSubtaskById(id);
+                    }
+                    if (task != null) {
+                        manager.historyManager.add(task);
                     }
                 }
             }
@@ -225,8 +229,3 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 }
 
-class ManagerSaveException extends RuntimeException {
-    public ManagerSaveException(String message) {
-        super(message);
-    }
-}
