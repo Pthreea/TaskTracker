@@ -1,35 +1,24 @@
 package sprint6.task;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint6.task.Subtask;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SubtaskTest {
+class SubtaskTest {
 
     @Test
-    @DisplayName("Должен проверять эквивалентность подзадач с одинаковым ID")
-    void shouldValidateSubtaskEqualityTest() {
-        // given
-        Subtask subtask1 = new Subtask("Subtask", "Description", "Epic-1");
+    void createSubtask() {
+        Subtask subtask = new Subtask("Test Subtask", "Description", "epic-1");
 
-        // when
-        Subtask subtask2 = new Subtask("Subtask", "Description", "Epic-1") {
-            {
-                // Force similar ID generation logic to simulate tests
-                try {
-                    var field = Subtask.class.getSuperclass().getDeclaredField("id");
-                    field.setAccessible(true);
-                    field.set(this, subtask1.getId());
-                } catch (IllegalAccessException | NoSuchFieldException e) {
-                    fail("Failed to set subtask's ID for testing.");
-                }
-            }
-        };
+        assertEquals("Test Subtask", subtask.getName(), "Имя подзадачи должно совпадать");
+        assertEquals("Description", subtask.getDescription(), "Описание подзадачи должно совпадать");
+        assertEquals(Status.NEW, subtask.getStatus(), "Начальный статус подзадачи должен быть NEW");
+        assertEquals("epic-1", subtask.getEpicId(), "ID эпика должен совпадать");
+    }
 
-        // then
-        assertEquals(subtask1, subtask2, "Подзадачи должны быть эквивалентны, если их ID совпадают");
-        assertEquals(subtask1.hashCode(), subtask2.hashCode(), "Подзадачи должны иметь одинаковый хэш-код для одинаковых ID");
+    @Test
+    void getEpicId() {
+        Subtask subtask = new Subtask("Test Subtask", "Description", "epic-1");
+
+        assertEquals("epic-1", subtask.getEpicId(), "ID эпика должен совпадать");
     }
 }

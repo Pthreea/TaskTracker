@@ -1,6 +1,6 @@
-id,type,name,status,description,epic
-null,TASK,Task 1,NEW,Description 1
-null,EPIC,Epic 1,NEW,Epic Description 1
-null,SUBTASK,Subtask 1,NEW,Subtask Description 1,null
+id,type,name,status,description,duration,startTime,epic
+task-1,TASK,Задача,NEW,Описание задачи,30,2025-11-10T00:25:24.0305989
+epic-1,EPIC,Эпик,NEW,Описание эпика,45,2025-11-10T01:25:24.0305989
+subtask-1,SUBTASK,Подзадача,NEW,Описание подзадачи,45,2025-11-10T01:25:24.0305989,epic-1
 
-null
+task-1,epic-1

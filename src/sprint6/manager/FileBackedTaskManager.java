@@ -7,10 +7,14 @@ import sprint6.task.Subtask;
 import sprint6.task.Status;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public FileBackedTaskManager(File file) {
         super();
@@ -19,7 +23,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,duration,startTime,epic\n");
 
             for (Task task : getAllTasks()) {
                 writer.write(toString(task) + "\n");
@@ -43,6 +47,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String type = task instanceof Epic ? "EPIC" :
                 task instanceof Subtask ? "SUBTASK" : "TASK";
 
+        String durationStr = task.getDuration().toMinutes() + "";
+        String startTimeStr = task.getStartTime() != null ?
+                task.getStartTime().format(DATE_TIME_FORMATTER) : "";
+
         String epicId = task instanceof Subtask ? "," + ((Subtask) task).getEpicId() : "";
 
         return String.join(",",
@@ -50,7 +58,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 type,
                 task.getName(),
                 task.getStatus().toString(),
-                task.getDescription() + epicId
+                task.getDescription(),
+                durationStr,
+                startTimeStr + epicId
         );
     }
 
@@ -61,20 +71,30 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = parts[2];
         Status status = Status.valueOf(parts[3]);
         String description = parts[4];
+        Duration duration = Duration.ofMinutes(Long.parseLong(parts[5]));
+
+        LocalDateTime startTime = null;
+        if (parts.length > 6 && !parts[6].isEmpty()) {
+            startTime = LocalDateTime.parse(parts[6], DATE_TIME_FORMATTER);
+        }
 
         Task task;
         switch (type) {
             case "TASK":
-                task = new Task(name, description, status);
+                task = new Task(name, description, status, duration, startTime);
                 break;
             case "EPIC":
                 task = new Epic(name, description);
                 task.setStatus(status);
+                task.setDuration(duration);
+                task.setStartTime(startTime);
                 break;
             case "SUBTASK":
-                String epicId = parts[5];
+                String epicId = parts[7];
                 task = new Subtask(name, description, epicId);
                 task.setStatus(status);
+                task.setDuration(duration);
+                task.setStartTime(startTime);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown task type: " + type);
@@ -113,7 +133,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
             }
 
-          
+
             String historyLine = reader.readLine();
             if (historyLine != null && !historyLine.isEmpty()) {
                 for (String id : historyLine.split(",")) {
@@ -134,6 +154,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
         return manager;
     }
+
+
 
     @Override
     public void addTask(Task task) {
@@ -210,21 +232,21 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public Task getTaskById(String id) {
         Task task = super.getTaskById(id);
-        save();
+        save(); // Сохраняем историю
         return task;
     }
 
     @Override
     public Epic getEpicById(String id) {
         Epic epic = super.getEpicById(id);
-        save();
+        save(); // Сохраняем историю
         return epic;
     }
 
     @Override
     public Subtask getSubtaskById(String id) {
         Subtask subtask = super.getSubtaskById(id);
-        save();
+        save(); // Сохраняем историю
         return subtask;
     }
 }

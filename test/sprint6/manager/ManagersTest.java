@@ -1,22 +1,23 @@
 package sprint6.manager;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint6.manager.Managers;
-import sprint6.manager.TaskManager;
-import sprint6.manager.HistoryManager;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ManagersTest {
+class ManagersTest {
 
     @Test
-    @DisplayName("Убедитесь, что Managers возвращает проинициализированные экземпляры менеджеров")
-    void shouldReturnInitializedInstancesTest() {
-        TaskManager taskManager = Managers.getDefault();
-        assertNotNull(taskManager, "Не удалось создать экземпляр TaskManager");
+    void getDefaultReturnsInMemoryTaskManager() {
+        TaskManager manager = Managers.getDefault();
 
+        assertNotNull(manager, "Менеджер задач не должен быть null");
+        assertTrue(manager instanceof InMemoryTaskManager, "Должен возвращаться InMemoryTaskManager");
+    }
+
+    @Test
+    void getDefaultHistoryReturnsInMemoryHistoryManager() {
         HistoryManager historyManager = Managers.getDefaultHistory();
-        assertNotNull(historyManager, "Не удалось создать экземпляр HistoryManager");
+
+        assertNotNull(historyManager, "Менеджер истории не должен быть null");
+        assertTrue(historyManager instanceof InMemoryHistoryManager, "Должен возвращаться InMemoryHistoryManager");
     }
 }
