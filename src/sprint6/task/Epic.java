@@ -1,10 +1,13 @@
 package sprint6.task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
     private List<String> subtaskIds;
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description, Status.NEW);
@@ -25,5 +28,14 @@ public class Epic extends Task {
 
     public void clearSubtaskIds() {
         subtaskIds.clear();
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

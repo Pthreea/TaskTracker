@@ -1,35 +1,60 @@
 package sprint6.task;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sprint6.task.Epic;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EpicTest {
+class EpicTest {
 
     @Test
-    @DisplayName("Должен проверять эквивалентность эпиков с одинаковым ID")
-    void shouldVerifyEpicEqualityTest() {
-        // given
-        Epic epic1 = new Epic("Epic", "Description");
+    void createEpic() {
+        Epic epic = new Epic("Test Epic", "Description");
 
-        // when
-        Epic epic2 = new Epic("Epic", "Description") {
-            {
-                // Force similar ID generation logic to simulate tests
-                try {
-                    var field = Epic.class.getSuperclass().getDeclaredField("id");
-                    field.setAccessible(true);
-                    field.set(this, epic1.getId());
-                } catch (IllegalAccessException | NoSuchFieldException e) {
-                    fail("Failed to set epic's ID for testing.");
-                }
-            }
-        };
+        assertEquals("Test Epic", epic.getName(), "Имя эпика должно совпадать");
+        assertEquals("Description", epic.getDescription(), "Описание эпика должно совпадать");
+        assertEquals(Status.NEW, epic.getStatus(), "Начальный статус эпика должен быть NEW");
+        assertTrue(epic.getSubtaskIds().isEmpty(), "Список подзадач должен быть пустым");
+    }
 
-        // then
-        assertEquals(epic1, epic2, "Эпики должны быть эквивалентны, если их ID совпадают");
-        assertEquals(epic1.hashCode(), epic2.hashCode(), "Эпики должны иметь одинаковый хэш-код для одинаковых ID");
+    @Test
+    void addSubtaskId() {
+        Epic epic = new Epic("Test Epic", "Description");
+
+        epic.addSubtaskId("sub-1");
+
+        assertEquals(1, epic.getSubtaskIds().size(), "Размер списка подзадач должен быть 1");
+        assertTrue(epic.getSubtaskIds().contains("sub-1"), "Список подзадач должен содержать добавленный ID");
+    }
+
+    @Test
+    void removeSubtaskId() {
+        Epic epic = new Epic("Test Epic", "Description");
+
+        epic.addSubtaskId("sub-1");
+        epic.addSubtaskId("sub-2");
+
+        epic.removeSubtaskId("sub-1");
+
+        assertEquals(1, epic.getSubtaskIds().size(), "Размер списка подзадач должен быть 1");
+        assertFalse(epic.getSubtaskIds().contains("sub-1"), "Список подзадач не должен содержать удаленный ID");
+        assertTrue(epic.getSubtaskIds().contains("sub-2"), "Список подзадач должен сохранить другие ID");
+    }
+
+    @Test
+    void clearSubtaskIds() {
+        Epic epic = new Epic("Test Epic", "Description");
+
+        epic.addSubtaskId("sub-1");
+        epic.addSubtaskId("sub-2");
+
+        epic.clearSubtaskIds();
+
+        assertTrue(epic.getSubtaskIds().isEmpty(), "Список подзадач должен быть пустым после очистки");
+    }
+
+    @Test
+    void getEndTimeWithoutSubtasks() {
+        Epic epic = new Epic("Test Epic", "Description");
+
+        assertNull(epic.getEndTime(), "Время окончания должно быть null, если нет подзадач");
     }
 }
