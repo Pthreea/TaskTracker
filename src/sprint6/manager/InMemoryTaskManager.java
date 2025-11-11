@@ -161,9 +161,16 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null && epics.containsKey(epic.getId())) {
             Epic existingEpic = epics.get(epic.getId());
             epic.getSubtaskIds().addAll(existingEpic.getSubtaskIds());
+            updateEpicTimeFields(epic);
+
+            if (epic.getStartTime() != null) {
+                if (!validateTaskTime(epic)) {
+                    throw new IllegalStateException("Эпик пересекается по времени с существующими задачами");
+                }
+            }
+
             epics.put(epic.getId(), epic);
             updateEpicStatus(epic);
-            updateEpicTimeFields(epic);
         }
     }
 
@@ -363,18 +370,17 @@ public class InMemoryTaskManager implements TaskManager {
                 .min(LocalDateTime::compareTo)
                 .orElse(null);
 
-        LocalDateTime latestEnd = epicSubtasks.stream()
-                .map(Subtask::getEndTime)
-                .filter(Objects::nonNull)
-                .max(LocalDateTime::compareTo)
-                .orElse(null);
-
         Duration totalDuration = epicSubtasks.stream()
                 .map(Subtask::getDuration)
                 .reduce(Duration.ZERO, Duration::plus);
 
         epic.setStartTime(earliestStart);
         epic.setDuration(totalDuration);
-        epic.setEndTime(latestEnd);
+
+        if (earliestStart != null) {
+            epic.setEndTime(earliestStart.plus(totalDuration));
+        } else {
+            epic.setEndTime(null);
+        }
     }
 }
